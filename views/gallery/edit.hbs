@@ -1,0 +1,25 @@
+<h1>EDIT GALLERY</h1>
+
+<form action="/gallery/{{id}}" method="POST" enctype="application/x-www/form/urlencoded">
+
+<label for="name">Author</label>
+<br>
+<input type="text" id="new_author" name="author" placeholder="Enter the author">
+<br>
+<br>
+
+<label for="name">Link</label>
+<br>
+<input type="text" id="new_link" name="link" placeholder="Enter the link">
+<br>
+<br>
+
+<label for="name">Description</label>
+<br>
+<input type="text" id="new_description" name="description" placeholder="type description">
+<br>
+<br>
+
+<input type="hidden" name="_method" value="PUT">
+<input type="submit" value="Edit">
+</form>

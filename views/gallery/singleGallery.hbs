@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gallery</title>
+</head>
+<body>
+
+<h1>singlePhoto.hbs</h1>
+
+<div id="galleries">
+    <div class= "gallery">
+      <p>AUTHOR: {{author}}</p>
+      <img src="{{link}}" alt="">
+      <p>DESCRIPTION: {{description}}</p>
+    </div>
+</div>
+
+    <form action="/gallery/{{id}}" method="POST">
+      <label form="Delete"></label>
+      <input type="hidden" name="_method" value="DELETE">
+      <input type="submit" value="Delete">
+    </form>
+
+    <form action="/gallery/{{id}}" method="POST">
+      <label form="Edit"></label>
+      <input type="hidden" name="_method" value="PUT">
+      <input type="submit" value="Edit">
+    </form>
+  </div>
+
+</body>
+</html>

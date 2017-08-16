@@ -19,9 +19,14 @@
   "homepage": "https://github.com/seolheekim/express-gallery#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "browser-sync": "^2.18.13",
     "express": "^4.15.3",
     "express-handlebars": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^3.1.0",
     "handlebars": "^4.0.10",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "pg": "^7.1.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.4.2"

@@ -19,7 +19,15 @@
 <input type="text" id="new_description" name="description" placeholder="type description">
 <br>
 <br>
-
-<input type="hidden" name="_method" value="PUT">
-<input type="submit" value="Edit">
+  <form action="/gallery/{{id}}" method="POST" enctype="application/x-www/form/urlencoded">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="submit" value="SAVE">
+  </form>
 </form>
+<button>
+  <a href="/gallery">BACK</a>
+</button>
+
+
+
+

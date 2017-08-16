@@ -1,12 +1,13 @@
 
-<h1>Gallery Index</h1>
+{{>login}}
 
-<div id="galleries">
   {{#each gallery}}
-    <div class= "gallery">
+    <div class="img_box">
+      <img src="{{link}}">
+    </div>
+
+    <div class="content_box">
       <p>AUTHOR: {{author}}</p>
-      <img src="{{link}}" alt="">
       <p>DESCRIPTION: {{description}}</p>
     </div>
   {{/each}}
-</div>

@@ -1,16 +1,21 @@
 
+
 {{#unless user}}
   <form action="/login" method="POST" enctype="application/x-www/form/urlencoded">
     <input type="text" name="username" placeholder="Enter Username">
     <input type="password" name="password" placeholder="Enter Password">
     <input class="login-button" type="submit" value="LOGIN" method="POST">
-{{!--     <input type="submit" value="LOGOUT" method="POST"> --}}
+    <input type="submit" value="LOGOUT" method="POST">
   </form>
 
-  <form action="/logout" method="POST" enctype="application/x-www/form/urlencoded">
+ {{!--  <form action="/logout" method="POST" enctype="application/x-www/form/urlencoded">
     <input class="logout-button" type="submit" value="LOGOUT" method="POST">
-  </form>
+  </form> --}}
  {{!--  <a href="/logout"><button>LOGOUT</button></a> --}}
 {{/unless}}
 
 
+{{#if user}}
+  Hello {{user.username}}<BR>
+  <a href="/logout">LOG OUT</a>
+{{/if}}

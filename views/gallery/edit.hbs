@@ -1,33 +1,28 @@
-<h1>EDIT GALLERY</h1>
+<div class="editpage_box">
+  <h1>EDIT GALLERY</h1>
 
-<form action="/gallery/{{id}}" method="POST" enctype="application/x-www/form/urlencoded">
-
-<label for="name">Author</label>
-<br>
-<input type="text" id="new_author" name="author" placeholder="Enter the author">
-<br>
-<br>
-
-<label for="name">Link</label>
-<br>
-<input type="text" id="new_link" name="link" placeholder="Enter the link">
-<br>
-<br>
-
-<label for="name">Description</label>
-<br>
-<input type="text" id="new_description" name="description" placeholder="type description">
-<br>
-<br>
   <form action="/gallery/{{id}}" method="POST" enctype="application/x-www/form/urlencoded">
-    <input type="hidden" name="_method" value="PUT">
-    <input type="submit" value="SAVE">
+
+    <label class="label_tag" for="name">AUTHOR</label>
+    <input type="text" class="input_tag" name="author" placeholder="Enter the author">
+
+    <label class="label_tag" for="name">LINK</label>
+    <input type="text" class="input_tag" name="link" placeholder="Enter the link">
+
+    <label class="label_tag" for="name">DESCRIPTION</label>
+    <input type="text" class="input_tag" name="description" placeholder="type description">
+
+
+      <div class="add_meta_field">
+        <ul id="meta_fields"></ul>
+
+        <input type="hidden" name="_method" value="PUT">
+        <input type="submit" value="SAVE">
+        <button id = "add_meta_field_button" type="meta_button" >EDIT META DATA</button>
+        <button> <a href="/gallery"> BACK </a> </button>
+
+      </div>
   </form>
-</form>
-<button>
-  <a href="/gallery">BACK</a>
-</button>
-
-
+</div>
 
 

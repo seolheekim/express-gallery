@@ -21,6 +21,7 @@ router.route('/login')
   .get( (req, res) => {
     User.findAll()
     .then( (data) => {
+      console.log("login MEOOOOOOOW")
       res.render('../views/gallery/index')
     })
     .catch( (err) => {
@@ -30,6 +31,7 @@ router.route('/login')
   .post( (req, res) => {
     User.find()
     .then( (data) => {
+      console.log("I MADE ITTTTTTT")
       res.redirect('/gallery')
     })
     .catch( (err) => {

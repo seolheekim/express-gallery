@@ -1,11 +1,19 @@
 const express         = require('express');
-const router          = express.Router();
+const photoMeta       = require('../collections/photoMeta.js').photoMeta
 const db              = require('../models');
+const router          = express.Router();
 const Gallery         = db.Gallery;
 
 
 router.route('/')
   .get( (req, res) => {
+    photoMeta().find().toArray()
+      .then(metas => {
+        console.log("THIS IS THE METAS FROM / GET ROUTE: ", metas)
+    })
+    .catch(err => {
+      console.log(err)
+    })
     Gallery.findAll()
       .then( (allGallery) => {
         res.render('../views/gallery/index',
@@ -48,12 +56,26 @@ router.route('/gallery')
         link: req.body.link,
         description: req.body.description
       })
-        .then( (addGallery) => {
-          res.redirect('/gallery')
+      .then( (data) => {
+        Gallery.findAll({
+          limit: 1,
+          order: [[ 'createdAt', 'DESC' ]]
         })
-        .catch( (err) => {
-          console.log(err)
-        })
+          .then( (item) => {
+            console.log('*** ITEM >> ', item[0].id);
+            let metaObj = {
+              id: item[0].id,
+              meta: req.body.meta
+            }
+            photoMeta().insertOne(metaObj)
+          })
+          .catch( (err) => {
+            console.log(err)
+          })
+      })
+      .catch( (err) => {
+        console.log(err)
+      })
   });
 
 router.route('/gallery/new')

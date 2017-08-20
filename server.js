@@ -4,15 +4,19 @@ const session             = require('express-session');
 const passport            = require('passport');
 const LocalStrategy       = require('passport-local').Strategy;
 const db                  = require('./models');
-const User                = require('./models').User;
 const galleryConnection   = require('./routers/galleryRouter.js')
 const loginConnection     = require('./routers/login.js');
 const methodOverride      = require('method-override');
 const bp                  = require('body-parser')
 const CONFIG              = require('./config/config.json');
 const RedisStore          = require('connect-redis')(session);
+const bcrypt              = require('bcrypt');
 const app                 = express();
 const PORT                = process.env.PORT || 3000;
+
+
+
+const saltRounds = 10;
 
 app.use(bp.json())
 app.use(bp.urlencoded())
@@ -23,9 +27,74 @@ app.use(session({
   name: 'seolhee',
   cookie: {
     maxAge: 1000000
-  },
-  saveUninitialized: true
+  }
 }))
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+passport.use(new LocalStrategy(
+ (username, password, done) => {
+    console.log('client-side-username', username)
+    console.log('client-side-password', password)
+
+    User.findOne({
+      where: {
+        username: username
+      }
+    })
+    .then((user) => {
+      if(user !== null){
+      bcrypt.compare(password, user.password)
+        .then( result => {
+          console.log("this is the RESULT: ", result)
+          if(result){
+            console.log("USER & PASSWORD IS CORRECT")
+            return done(null, user)
+          }else {
+            console.log('PASSWORD DOES NOT MATCH')
+            return done(null, false, { message: 'Incorrect Password' })
+          }
+        })
+        .catch( err => {
+          console.log(err)
+        })
+      }else{
+        throw 'user not found'
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+      return done(null, false, { message: 'Incorrect Username' })
+    })
+  }
+))
+
+passport.serializeUser(function(user, done) {
+  console.log('serializing the user into session')
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(userId, done) {
+  console.log('adding user information into the req object')
+  User.findOne({
+    where: {
+      id: userId
+    }
+  })
+  .then( (user) => {
+    return done( null, {
+      id: user.id,
+      username: user.username
+    })
+  })
+  .catch( (err) => {
+    done(err, user)
+  })
+
+  done(null, userId);
+
+});
 
 app.use(methodOverride('X-HTTP-Method-Override'))
 app.use(methodOverride(function (req, res) {
@@ -53,69 +122,41 @@ app.use(session({
   secret: 'Keyboard Cat'
 }))
 
-app.use(passport.initialize())
-app.use(passport.session())
-
-
-passport.use(new LocalStrategy(
-  function (username, password, done) {
-            // ^ client side username and password
-    console.log('client-side-username', username)
-    console.log('client-side-password', password)
-
-    User.findOne({
-      where: {
-        username: username
-      }
-    })
-    .then((user) => {
-      console.log('User exists in DB')
-      if (user.password === password){
-        return done(null, user)
-      }else{
-        return done(null, false, { message: 'Incorrect Password' })
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-      return done(null, false, { message: 'Incorrect Username' })
-    })
-
-  }
-))
-
-passport.serializeUser(function(user, done) {
-                              // ^ received from the LocalStratgy succession
-  console.log('serializing the user into session')
-
-  done(null, user.id);
-  // ^ building the object/values/information to store into the session object
-});
-
-passport.deserializeUser(function(userId, done) {
-  console.log('adding user information into the req object')
-  User.findOne({
-    where: {
-      id: userId
-    }
-  }).then( (user) => {
-    return done( null, {
-      id: user.id,
-      username: user.username
-    })
-  }).catch( (err) => {
-    done(err, user)
-  })
-
-  done(null, userId);
-          // ^ add the serialized information into the request object
-});
 
 app.use(express.static('public'))
 
 app.get('/newUser', (req, res) => {
   res.render('../views/partials/newUser')
+  console.log('I NEED MY HASH YOOOOOOOO!')
 });
+
+app.post('/newUser', (req, res) => {
+  console.log("this is username: ", req.body.username)
+  console.log("this is the password: ", req.body.password)
+
+  bcrypt.genSalt(saltRounds)
+    .then( salt => {
+      bcrypt.hash( req.body.password, salt)
+      .then( hash => {
+        console.log("this is the HASH: ", hash)
+        User.create({
+          username: req.body.username,
+          password: hash
+        })
+        .then( () => {
+          console.log("Inserted new user!")
+          res.end();
+        })
+        .catch( err => {
+          console.log(err)
+        })
+      })
+    })
+    .catch( err =>{
+      console.log(err)
+    })
+  res.redirect('/')
+})
 
 app.post('/logout', (req,res) => {
   req.session.destroy();

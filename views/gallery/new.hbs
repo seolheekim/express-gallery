@@ -1,26 +1,25 @@
+<div class="newpage_box">
+  <h1>NEW GALLERY</h1>
 
-<h1>NEW GALLERY</h1>
+  <form action="/gallery" method="POST" enctype="application/x-www/form/urlencoded">
 
-<form action="/" method="POST" enctype="application/x-www/form/urlencoded">
+    <label class="label_tag" for="name">Author</label>
+    <input type="text" class="input_tag" name="author" placeholder="Enter the author">
 
-<label for="name">Author</label>
-<br>
-<input type="text" id="new_author" name="author" placeholder="Enter the author">
-<br>
-<br>
+    <label class="label_tag" for="name">Link</label>
+    <input type="text" class="input_tag" name="link" placeholder="Enter the link">
 
-<label for="name">Link</label>
-<br>
-<input type="text" id="new_link" name="link" placeholder="Enter the link">
-<br>
-<br>
+    <label class="label_tag" for="name">Description</label>
+    <input type="text" class="input_tag" name="description" placeholder="type description">
 
-<label for="name">Description</label>
-<br>
-<input type="text" id="new_description" name="description" placeholder="type description">
-<br>
-<br>
+    <input type="submit" value="save">
 
-<input type="submit" value="send">
+    <div class="add_meta_field">
+      <ul id="meta_fields"></ul>
 
-</form>
+      <button id = "add_meta_field_button" type="button" >Add Meta Data</button>
+
+    </div>
+  </form>
+</div>
+<script src="/js/metaFields.js"> </script>

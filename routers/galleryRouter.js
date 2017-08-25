@@ -57,21 +57,18 @@ router.route('/gallery')
         description: req.body.description
       })
       .then( (data) => {
-        Gallery.findAll({
+        return Gallery.findAll({
           limit: 1,
           order: [[ 'createdAt', 'DESC' ]]
         })
-          .then( (item) => {
-            console.log('*** ITEM >> ', item[0].id);
-            let metaObj = {
-              id: item[0].id,
-              meta: req.body.meta
-            }
-            photoMeta().insertOne(metaObj)
-          })
-          .catch( (err) => {
-            console.log(err)
-          })
+      })
+      .then( (item) => {
+        console.log('*** ITEM >> ', item[0].id);
+        let metaObj = {
+          id: item[0].id,
+          meta: req.body.meta
+        }
+        photoMeta().insertOne(metaObj)
       })
       .catch( (err) => {
         console.log(err)

@@ -1,21 +1,22 @@
-<!DOCTYPE html>
-<html>
-  <body>
-      <div class="feature_container feature_contain">
-        {{#with allPhoto.[0]}}
-          <div class="single single_image">
-            <a href="/gallery/{{id}}"><img src="{{link}}" alt=""></a>
-          </div>
-        {{/with}}
-      </div>
+this is the index
 
-        <div class="photo_container photo_contain">
-          {{#each gallery}}
-            <div class="all all_image">
-              <a href="/gallery/{{id}}"><img src="{{link}}" alt=""></a>
-            </div>
-          {{/each}}
-        </div> <!-- end of photo_container -->
-    </div> <!-- end of main_container -->
-  </body>
-</html>
+<div class="index_container">
+  <div class="index_contain">
+
+    <div class="feature_container feature_contain">
+      {{#with gallery.[1]}}
+        <div class="feature feature_image">
+          <a href="/gallery/{{id}}"><img src="{{link}}" alt=""></a>
+        </div>
+      {{/with}}
+    </div>
+
+    <div class="photo_container photo_contain">
+      {{#each gallery}}
+        <div class="all_image">
+          <a href="/gallery/{{id}}"><img src="{{link}}" alt=""></a>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

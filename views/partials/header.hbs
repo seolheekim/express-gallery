@@ -1,14 +1,15 @@
-<div class="main_container main_contain">
-  <div class="login_box"> {{> login}} </div>
+this is the header
+<div class="header_container header_contain">
 
-  <div class="newuser_box"> {{> newUser}} </div>
+  <div class="create_newuser" > <a href="/gallery/new" class="animated-button gibson-one"> CREATE NEW USERNAME </a> </div>
 
-  <div class="horizontal_line"></div>
+    <div class="login_box"> {{> login}} </div>
+    <div class="horizontal_line"></div>
 
-  <div class="topbar_box">
-    <div class="logo_box">
-      <div class="logo">_ARCHITEKT</div>
-    </div>
+    <div class="topbar_box">
+      <div class="logo_box">
+        <div class="logo"> <a href="/gallery"> _ARCHITEKT</div>
+      </a></div>
 
     <div class="message_box">
       <div class="vertical_line">
@@ -17,7 +18,9 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-  </div> <!-- end of topbar_box -->
 
-<a href="/gallery/new"><input type="submit" value="ADD NEW GALLERY"></a>
+
+
